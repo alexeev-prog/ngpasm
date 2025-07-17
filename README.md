@@ -48,7 +48,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## License & Support
 
-This project is licensed under **LGPL License** - see [LICENSE](https://github.com/alexeev-prog/ngpasm/blob/main/LICENSE). For commercial support and enterprise features, contact [alexeev.dev@mail.ru](mailto:alexeev.dev@mail.ru).
+This project is licensed under **GNU LGPL 2.1 License** - see [LICENSE](https://github.com/alexeev-prog/ngpasm/blob/main/LICENSE). For commercial support and enterprise features, contact [alexeev.dev@mail.ru](mailto:alexeev.dev@mail.ru).
 
 [Explore Documentation](https://alexeev-prog.github.io/ngpasm) |
 [Report Issue](https://github.com/alexeev-prog/ngpasm/issues) |
@@ -57,6 +57,6 @@ This project is licensed under **LGPL License** - see [LICENSE](https://github.c
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
-Professional deprecation management for modern Python projects
+Next Generation Python Assembly Metaprogramming Library with 100% tests coverage and fully documentated.
 
-Copyright © 2025 Alexeev Bronislav. Distributed under MIT license.
+Copyright © 2025 Alexeev Bronislav. Distributed under GNU LGPL 2.1 license.
