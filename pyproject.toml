@@ -13,6 +13,12 @@ dependencies = [
     "toml>=0.10.2",
 ]
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ngpasm"]
 
 [tool.ruff.lint]
 select = [
@@ -74,10 +80,6 @@ ignore = [
   "PLR6301", # do not require classmethod / staticmethod when self not used
   "TRY003",  # long exception messages from `tryceratops`
 ]
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [

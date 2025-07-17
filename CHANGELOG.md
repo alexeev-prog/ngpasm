@@ -1,3 +1,9 @@
+commit fa3ed0b0d955ae664675db0f22421faeae121dbe
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Fri Jul 18 05:34:03 2025 +0700
+
+    add file config loader
+
 commit f40d323537daca811237aec3cd818857d8f80f62
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Fri Jul 18 05:23:10 2025 +0700
