@@ -6,8 +6,12 @@ readme = "README.md"
 authors = [
     { name = "Alexeev Bronislav", email = "alexeev.dev@mail.ru" }
 ]
-requires-python = ">=3.10"
-dependencies = []
+requires-python = ">=3.11"
+dependencies = [
+    "orjson>=3.11.0",
+    "pyyaml>=6.0.2",
+    "toml>=0.10.2",
+]
 
 
 [tool.ruff.lint]
