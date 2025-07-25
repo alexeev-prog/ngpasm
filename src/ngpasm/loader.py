@@ -3,6 +3,7 @@ Loader module for NGPASM.
 
 This module have a functional for reading config files.
 """
+
 from enum import Enum
 from pathlib import Path
 

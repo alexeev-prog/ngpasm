@@ -545,7 +545,7 @@ source = { editable = "." }
 dependencies = [
     { name = "orjson" },
     { name = "pyyaml" },
-    { name = "textual" },
+    { name = "rich" },
     { name = "toml" },
 ]
 
@@ -569,7 +569,7 @@ dev = [
 requires-dist = [
     { name = "orjson", specifier = ">=3.11.0" },
     { name = "pyyaml", specifier = ">=6.0.2" },
-    { name = "textual", specifier = ">=4.0.0" },
+    { name = "rich", specifier = ">=14.0.0" },
     { name = "toml", specifier = ">=0.10.2" },
 ]
 
