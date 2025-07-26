@@ -1,3 +1,9 @@
+commit 54fede9fefd39240f89430d1b0626d8ee53087e9
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Jul 26 04:27:16 2025 +0700
+
+    feat: add registers for 16,32,64 bit architectures
+
 commit 6e8cfa58388abc2469ca3ad5104e6442219dc121
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Jul 19 01:01:04 2025 +0700

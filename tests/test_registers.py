@@ -195,6 +195,9 @@ def test_register_aliases() -> None:
     assert regs['TEST'] == reg
     assert regs['ALT1'] == reg
     assert regs['ALT2'] == reg
+    assert regs.ALT2 == reg
+    assert regs.TEST == reg
+    assert regs.ALT1 == reg
 
 
 def test_register_set_iteration() -> None:

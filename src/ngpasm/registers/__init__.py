@@ -60,6 +60,10 @@ class BaseRegisterSet(Mapping):
         """Construct register hierarchy for the architecture."""
         raise NotImplementedError
 
+    def __getattr__(self, key: str) -> Register:
+        """Get register by name."""
+        return self.__getitem__(key)
+
     def __getitem__(self, key: str) -> Register:
         """Get register by name."""
         if key in self._registers:
