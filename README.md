@@ -37,6 +37,9 @@
 </p>
 
  > Next Generation Python Assembly Metaprogramming Library with 100% tests coverage and fully documentated.
+
+> [!CAUTION]
+> > NGPASM is currently in active alpha development. While core functionality is stable, some advanced features are still evolving. Production use requires thorough testing.
  
 ## Contributing
 

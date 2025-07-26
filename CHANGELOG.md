@@ -1,3 +1,9 @@
+commit c822be660ed4ddc0e1cd654a7d8930ad52689c56
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Jul 26 18:25:03 2025 +0700
+
+    style settings
+
 commit b77ba56149305b607d98196c3027e812021073fa
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Jul 26 18:22:43 2025 +0700
