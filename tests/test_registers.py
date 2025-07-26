@@ -66,7 +66,7 @@ def test_register_set64_creation() -> None:
     regs = RegisterSet64(64)
     assert isinstance(regs, BaseRegisterSet)  # noqa: S101
     assert regs.bitness == 64  # noqa: S101
-    assert len(regs) == 7  # noqa: S101
+    assert len(regs) == 76  # noqa: S101
 
 
 def test_aliases_in_standard_sets() -> None:

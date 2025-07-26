@@ -1,3 +1,15 @@
+commit dd06c61e3321c03bdf39eafa6fe95dd99fb94e6d
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Jul 26 19:38:07 2025 +0700
+
+    fix codestyle
+
+commit 6a02ed17d43ae6fff1e0f0086bba54cd1686d8b3
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Jul 26 18:56:04 2025 +0700
+
+    small changes in md filez
+
 commit c822be660ed4ddc0e1cd654a7d8930ad52689c56
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Jul 26 18:25:03 2025 +0700
