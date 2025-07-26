@@ -1,3 +1,9 @@
+commit 15bda9a729ebb68a79abef8ef6382a141ec695aa
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Jul 26 22:49:35 2025 +0700
+
+    fix tests errors
+
 commit dd06c61e3321c03bdf39eafa6fe95dd99fb94e6d
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Jul 26 19:38:07 2025 +0700

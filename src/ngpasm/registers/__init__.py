@@ -52,7 +52,7 @@ class BaseRegisterSet(Mapping):
 
     def __init__(self, bitness: int) -> None:
         """Initialize a base registers set."""
-        self.bitness = bitness
+        self.bitness: int = bitness
         self._registers: dict[str, Register] = {}
         self._build_register_set()
 
