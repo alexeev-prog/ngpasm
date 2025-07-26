@@ -1,3 +1,9 @@
+commit b77ba56149305b607d98196c3027e812021073fa
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Jul 26 18:22:43 2025 +0700
+
+    add getattr dunder method in register
+
 commit 54fede9fefd39240f89430d1b0626d8ee53087e9
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Jul 26 04:27:16 2025 +0700

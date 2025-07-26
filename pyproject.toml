@@ -22,7 +22,7 @@ build-backend = "hatchling.build"
 packages = ["src/ngpasm"]
 
 [tool.ruff.format]
-quote-style = "single"
+quote-style = "double"
 docstring-code-format = true
 
 [tool.ruff.lint]

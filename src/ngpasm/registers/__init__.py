@@ -432,10 +432,10 @@ def get_registers(mode: str) -> BaseRegisterSet | None:
         Register set instance or None for invalid mode.
 
     Examples:
-        >>> regs = get_registers('64')
-        >>> regs['RAX'].name
+        >>> regs = get_registers("64")
+        >>> regs["RAX"].name
         'RAX'
-        >>> regs['RAX'].size
+        >>> regs["RAX"].size
         64
 
     """
