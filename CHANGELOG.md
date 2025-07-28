@@ -1,3 +1,15 @@
+commit 1d963383876b7662bb1578a107a114998d1f73b1
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Mon Jul 28 21:00:17 2025 +0700
+
+    add mnemonic base for future
+
+commit 45e51c5b000ae95f27e02dc9c0627b281c75c479
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sun Jul 27 00:29:58 2025 +0700
+
+    fix codestyle
+
 commit 15bda9a729ebb68a79abef8ef6382a141ec695aa
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Jul 26 22:49:35 2025 +0700
