@@ -1,3 +1,9 @@
+commit cf4d3fa4a90992fb6f67d6bdd0fba0cd5ba160ea
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Thu Jul 31 03:35:36 2025 +0700
+
+    add tests for basic mnemonics
+
 commit d9a39d9164d7c08f7c32563a0e764accf375f2c2
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Mon Jul 28 23:20:32 2025 +0700

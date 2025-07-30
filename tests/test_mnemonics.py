@@ -4,23 +4,23 @@ from ngpasm.mnemonics.base import _BasicMnemonic
 from ngpasm.registers import Register
 
 
-class MockRegister(Register):
-    def __init__(self, name):
+class MockRegister(Register):  # noqa: D101
+    def __init__(self, name):  # noqa: D107
         self.name = name
 
-    def __str__(self):
+    def __str__(self):  # noqa: D105
         return self.name
 
 
 @pytest.fixture
-def basic_mnemonic():
+def basic_mnemonic():  # noqa: D103
     return _BasicMnemonic(
         "test", MockRegister("AX"), MockRegister("BX"), enable_comment=True
     )
 
 
 @pytest.mark.parametrize(
-    "operands, expected",
+    ("operands", "expected"),
     [
         ([], "TEST operation."),
         (["AX"], "TEST operand AX."),
@@ -28,17 +28,17 @@ def basic_mnemonic():
         (["AX", "BX", 10], "TEST with 3 operands."),
     ],
 )
-def test_generate_default_comment(operands, expected):
+def test_generate_default_comment(operands, expected):  # noqa: D103
     mnemonic = _BasicMnemonic("test", *operands)
-    assert mnemonic._generate_default_comment() == expected
+    assert mnemonic._generate_default_comment() == expected  # noqa: S101, SLF001
 
 
-def test_comment_property(basic_mnemonic):
+def test_comment_property(basic_mnemonic):  # noqa: D103
     basic_mnemonic.comment = "Custom comment"
-    assert basic_mnemonic.comment == "Custom comment"
+    assert basic_mnemonic.comment == "Custom comment"  # noqa: S101
 
     basic_mnemonic.comment = None
-    assert basic_mnemonic.comment is None
+    assert basic_mnemonic.comment is None  # noqa: S101
 
 
 @pytest.mark.parametrize(
@@ -49,9 +49,9 @@ def test_comment_property(basic_mnemonic):
         [10, MockRegister("BX")],
     ],
 )
-def test_valid_operand_types(operands):
+def test_valid_operand_types(operands):  # noqa: D103
     mnemonic = _BasicMnemonic("test", *operands)
-    mnemonic._validate_operand_types()
+    mnemonic._validate_operand_types()  # noqa: SLF001
 
 
 @pytest.mark.parametrize(
@@ -62,14 +62,14 @@ def test_valid_operand_types(operands):
         [object()],
     ],
 )
-def test_invalid_operand_types(operands):
-    with pytest.raises(TypeError):
+def test_invalid_operand_types(operands):  # noqa: D103
+    with pytest.raises(TypeError):  # noqa: PT012
         mnemonic = _BasicMnemonic("test", *operands)
-        mnemonic._validate_operand_types()
+        mnemonic._validate_operand_types()  # noqa: SLF001
 
 
 @pytest.mark.parametrize(
-    "operands, expected",
+    ("operands", "expected"),
     [
         ([], ""),
         (["AX"], "AX"),
@@ -77,31 +77,31 @@ def test_invalid_operand_types(operands):
         (["AX", "BX", 10], "AX, BX, 10"),
     ],
 )
-def test_format_operands(operands, expected):
+def test_format_operands(operands, expected):  # noqa: D103
     mnemonic = _BasicMnemonic("test", *operands)
-    assert mnemonic._format_operands() == expected
+    assert mnemonic._format_operands() == expected  # noqa: S101, SLF001
 
 
 @pytest.mark.parametrize(
-    "enable_comment, comment, expected",
+    ("enable_comment", "comment", "expected"),
     [
         (True, None, "    test AX, BX  ; TEST from BX to AX."),
         (True, "Custom", "    test AX, BX  ; Custom"),
         (False, None, "    test AX, BX"),
     ],
 )
-def test_construct(basic_mnemonic, enable_comment, comment, expected):
-    basic_mnemonic._enable_comment = enable_comment
+def test_construct(basic_mnemonic, enable_comment, comment, expected):  # noqa: D103
+    basic_mnemonic._enable_comment = enable_comment  # noqa: SLF001
     basic_mnemonic.comment = comment
-    assert basic_mnemonic.construct() == expected
+    assert basic_mnemonic.construct() == expected  # noqa: S101
 
 
-def test_construct_indent(basic_mnemonic):
-    assert (
+def test_construct_indent(basic_mnemonic):  # noqa: D103
+    assert (  # noqa: S101
         basic_mnemonic.construct(indent="  ") == "  test AX, BX  ; TEST from BX to AX."
     )
 
 
-def test_construct_no_operands():
+def test_construct_no_operands():  # noqa: D103
     mnemonic = _BasicMnemonic("nop")
-    assert mnemonic.construct() == "    nop  ; NOP operation."
+    assert mnemonic.construct() == "    nop  ; NOP operation."  # noqa: S101
