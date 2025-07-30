@@ -53,9 +53,8 @@ pytest --cov=pyminideprecator --cov-report=term-missing
 
 ### Code Quality Checks
 ```bash
-black --check .
-flake8
-pyrefly src/pyminideprecator
+ruff check src/ngpasm
+flake8 src/ngpasm
 ```
 
 ## Pull Request Guidelines

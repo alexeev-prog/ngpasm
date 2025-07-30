@@ -1,3 +1,9 @@
+commit d9a39d9164d7c08f7c32563a0e764accf375f2c2
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Mon Jul 28 23:20:32 2025 +0700
+
+    improve mnemonics
+
 commit 1d963383876b7662bb1578a107a114998d1f73b1
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Mon Jul 28 21:00:17 2025 +0700
