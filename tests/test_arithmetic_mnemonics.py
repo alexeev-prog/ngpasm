@@ -18,7 +18,7 @@ def add_mnemonic():  # noqa: D103
 
 
 def test_add_mnemonic_comment(add_mnemonic):  # noqa: D103
-    assert add_mnemonic._generate_default_comment() == "Add from BX to AX"  # noqa: S101, SLF001
+    assert add_mnemonic._generate_default_comment() == "Adding the BX value to the AX"  # noqa: S101, SLF001
 
 
 @pytest.mark.parametrize(
@@ -28,6 +28,5 @@ def test_add_mnemonic_comment(add_mnemonic):  # noqa: D103
     ],
 )
 def test_add_invalid_operands(operands):  # noqa: D103
-    mnemonic = AddMnemonic("add", *operands)
     with pytest.raises(IndexError):
-        mnemonic._generate_default_comment()  # noqa: SLF001
+        mnemonic = AddMnemonic("add", *operands)  # noqa: F841

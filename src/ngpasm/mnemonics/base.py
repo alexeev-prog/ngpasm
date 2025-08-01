@@ -1,9 +1,10 @@
+from abc import ABC, abstractmethod
 from typing import Union
 
 from ngpasm.registers import Register
 
 
-class _BasicMnemonic:
+class _BasicMnemonic(ABC):
     """
     Base class for assembly mnemonics with flexible operand handling.
 
@@ -37,6 +38,12 @@ class _BasicMnemonic:
         self.operands = operands
         self._enable_comment = enable_comment
         self._comment: str | None = None
+
+        self._validate()
+
+    @abstractmethod
+    def _validate(self):
+        raise NotImplementedError
 
     @property
     def comment(self) -> str | None:
