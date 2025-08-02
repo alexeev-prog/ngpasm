@@ -4,14 +4,23 @@ import sys
 sys.path.insert(0, os.path.abspath("."))
 sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(0, os.path.abspath(os.path.join("..", "..")))
-sys.path.insert(0, os.path.abspath("../ngpasm"))
-sys.path.insert(0, os.path.abspath("ngpasm"))
+sys.path.insert(0, os.path.abspath("../src"))
+sys.path.insert(0, os.path.abspath("src"))
+sys.path.insert(0, os.path.abspath("../src/ngpasm"))
+sys.path.insert(0, os.path.abspath("src/ngpasm"))
 
 project = "ngpasm"
 author = "name"
 version = "0.1.1"
 release = "0.1"
 project_copyright = "2025, Alexeev Bronislaw"
+
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': True,
+    'private-members': True,
+    'special-members': '__init__',
+}
 
 extensions = [
     "sphinx.ext.autodoc",  # autodoc from docstrings
