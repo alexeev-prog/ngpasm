@@ -5,6 +5,5 @@ ngpasm
    :maxdepth: 4
 
    loader
+   mnemonics
    registers
-   base
-   arithmetic

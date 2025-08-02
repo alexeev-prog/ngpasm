@@ -4,14 +4,12 @@ import sys
 sys.path.insert(0, os.path.abspath("."))
 sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(0, os.path.abspath(os.path.join("..", "..")))
-sys.path.insert(0, os.path.abspath("../src"))
-sys.path.insert(0, os.path.abspath("src"))
-sys.path.insert(0, os.path.abspath("../src/ngpasm"))
-sys.path.insert(0, os.path.abspath("src/ngpasm"))
+sys.path.insert(0, os.path.abspath("../ngpasm"))
+sys.path.insert(0, os.path.abspath("ngpasm"))
 
 project = "ngpasm"
 author = "name"
-version = "0.1.0"
+version = "0.1.1"
 release = "0.1"
 project_copyright = "2025, Alexeev Bronislaw"
 
@@ -30,18 +28,11 @@ extensions = [
 pygments_style = "gruvbox-dark"
 
 html_theme = "furo"  # theme
+html_static_path = ["_static"]  # static dir
 todo_include_todos = True  # include todo in docs
 auto_doc_default_options = {"autosummary": True}
 
 autodoc_mock_imports = []
-autodoc_typehints = "description"
-autodoc_member_order = "bysource"
-autosummary_generate = True
-napoleon_include_init_with_doc = True
-
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/3", None),
-}
 
 
 def skip(app, what, name, obj, would_skip, options):
