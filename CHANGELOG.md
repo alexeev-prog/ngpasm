@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+=======
+commit 4987c92ff230948270afff27da3cb44fbb8b2386
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 14:32:10 2025 +0700
+
+    fix tests
+
+>>>>>>> dev
 commit 2011edd02fe3740ac63ad2407fafeb8774a70514
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Aug 2 13:42:51 2025 +0700
