@@ -99,6 +99,5 @@ dev = [
     "pytest-sugar>=1.0.0",
     "ruff>=0.12.4",
     "sphinx>=8.2.3",
-    "sphinx-apidoc",
     "wemake-python-styleguide>=1.3.0",
 ]

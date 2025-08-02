@@ -1,3 +1,15 @@
+commit 2011edd02fe3740ac63ad2407fafeb8774a70514
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 13:42:51 2025 +0700
+
+    fix sphinx docs configuration
+
+commit 7960796fcf26ec041c830bb871fec4c981641e2a
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 13:36:45 2025 +0700
+
+    fix docs
+
 commit 96a4600757211485efed139cbf62bb3820499ebc
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Aug 2 13:14:02 2025 +0700
