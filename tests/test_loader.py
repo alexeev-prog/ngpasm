@@ -73,13 +73,16 @@ SCALAR_ERROR_CASES = [
     (ConfigType.YAML, "null", ".yaml"),
 ]
 
+
 @pytest.mark.parametrize("extension, expected", EXTENSION_TEST_CASES)
 def test_detect_config_type_by_extension(extension, expected):
     assert detect_config_type_by_extension(extension) == expected
 
+
 @pytest.mark.parametrize("filename, expected", FILENAME_TEST_CASES)
 def test_detect_config_type_by_filename(filename, expected):
     assert detect_config_type_by_filename(filename) == expected
+
 
 @pytest.fixture
 def tmp_config_file(tmp_path):
@@ -87,10 +90,16 @@ def tmp_config_file(tmp_path):
         file = tmp_path / f"test_config{extension}"
         file.write_text(content)
         return file
+
     return _create_file
 
-@pytest.mark.parametrize(("config_type", "config_data", "content"), CONFIG_READER_VALID_CASES)
-def test_config_reader_valid_content(tmp_config_file, config_type, config_data, content):
+
+@pytest.mark.parametrize(
+    ("config_type", "config_data", "content"), CONFIG_READER_VALID_CASES
+)
+def test_config_reader_valid_content(
+    tmp_config_file, config_type, config_data, content
+):
     config_file = tmp_config_file(
         content,
         {
@@ -104,15 +113,22 @@ def test_config_reader_valid_content(tmp_config_file, config_type, config_data, 
     reader_auto = ConfigReader(str(config_file))
     assert reader_auto.config == config_data
 
+
 def test_config_reader_nonexistent_file():
     reader = ConfigReader("non_existent.json")
     assert reader.config == {}
 
-@pytest.mark.parametrize(("config_type", "content", "extension", "exception"), CONFIG_READER_INVALID_CASES)
-def test_config_reader_invalid_content(tmp_config_file, config_type, content, extension, exception):
+
+@pytest.mark.parametrize(
+    ("config_type", "content", "extension", "exception"), CONFIG_READER_INVALID_CASES
+)
+def test_config_reader_invalid_content(
+    tmp_config_file, config_type, content, extension, exception
+):
     config_file = tmp_config_file(content, extension)
     with pytest.raises(exception):
         ConfigReader(str(config_file), configtype=config_type)
+
 
 @pytest.mark.parametrize(("config_type", "content", "extension"), NON_DICT_ERROR_CASES)
 def test_config_reader_non_dict_error(tmp_config_file, config_type, content, extension):
@@ -120,11 +136,13 @@ def test_config_reader_non_dict_error(tmp_config_file, config_type, content, ext
     with pytest.raises(TypeError):
         ConfigReader(str(config_file), configtype=config_type)
 
+
 @pytest.mark.parametrize(("config_type", "content", "extension"), SCALAR_ERROR_CASES)
 def test_config_reader_scalar_error(tmp_config_file, config_type, content, extension):
     config_file = tmp_config_file(content, extension)
     with pytest.raises(TypeError):
         ConfigReader(str(config_file), configtype=config_type)
+
 
 def test_config_reader_empty_file(tmp_config_file):
     json_file = tmp_config_file("", ".json")
@@ -138,16 +156,19 @@ def test_config_reader_empty_file(tmp_config_file):
     reader = ConfigReader(str(toml_file))
     assert reader.config == {}
 
+
 def test_config_reader_no_extension_json(tmp_config_file):
     content = '{"test": "value"}'
     config_file = tmp_config_file(content, "")
     reader = ConfigReader(str(config_file))
     assert reader.config == {"test": "value"}
 
+
 def test_config_reader_no_extension_invalid(tmp_config_file):
     config_file = tmp_config_file("invalid content", "")
     with pytest.raises(json.JSONDecodeError):
         ConfigReader(str(config_file))
+
 
 def test_config_reader_scalar_json_content(tmp_config_file):
     json_file = tmp_config_file("42", ".json")
