@@ -101,4 +101,7 @@ class ConfigReader:
             with self.config_file.open("rb") as f:
                 data = json.loads(f.read())
 
-        return data if isinstance(data, dict) else {}
+        if not isinstance(data, dict):
+            raise TypeError(f"Invalid data: {self.config_file}")
+
+        return data

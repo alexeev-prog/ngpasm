@@ -16,10 +16,10 @@ release = "0.1"
 project_copyright = "2025, Alexeev Bronislaw"
 
 autodoc_default_options = {
-    'members': True,
-    'undoc-members': True,
-    'private-members': True,
-    'special-members': '__init__',
+    "members": True,
+    "undoc-members": True,
+    "private-members": True,
+    "special-members": "__init__",
 }
 
 extensions = [
