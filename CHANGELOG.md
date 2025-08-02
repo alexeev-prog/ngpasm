@@ -1,3 +1,9 @@
+commit 091b78f4f6f9d9d498fdb401353960b53db591fa
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 13:09:19 2025 +0700
+
+    fix and add more arithmetic mnemonics test
+
 commit a913918f5c5fc7dc891718f8da6a8771c3d96519
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Aug 2 06:50:10 2025 +0700

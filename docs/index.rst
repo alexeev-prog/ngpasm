@@ -7,7 +7,7 @@ ngpasm documentation
    :maxdepth: 2
    :caption: Source code docs:
 
-   modules
+   source/modules
 
 ------------------
 
