@@ -1,3 +1,45 @@
+commit a913918f5c5fc7dc891718f8da6a8771c3d96519
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 06:50:10 2025 +0700
+
+    improve arithmetic mnemonics & docs
+
+commit 0b7a999979ba6f960596aa4ad19bb7fb8ac54014
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Thu Jul 31 10:50:54 2025 +0700
+
+    update changelog
+
+commit a1ea315c1ebe1793ea722d19db78b54363c9692f
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Thu Jul 31 03:39:19 2025 +0700
+
+    fix codestyle
+
+commit cf4d3fa4a90992fb6f67d6bdd0fba0cd5ba160ea
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Thu Jul 31 03:35:36 2025 +0700
+
+    add tests for basic mnemonics
+
+commit d9a39d9164d7c08f7c32563a0e764accf375f2c2
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Mon Jul 28 23:20:32 2025 +0700
+
+    improve mnemonics
+
+commit 1d963383876b7662bb1578a107a114998d1f73b1
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Mon Jul 28 21:00:17 2025 +0700
+
+    add mnemonic base for future
+
+commit 45e51c5b000ae95f27e02dc9c0627b281c75c479
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sun Jul 27 00:29:58 2025 +0700
+
+    fix codestyle
+
 commit 15bda9a729ebb68a79abef8ef6382a141ec695aa
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Jul 26 22:49:35 2025 +0700

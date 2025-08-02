@@ -12,7 +12,7 @@ import dataclasses
 from collections.abc import Iterator, Mapping
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass
 class Register:
     """
     Represents a CPU register with immutable properties.
