@@ -4,7 +4,7 @@ from typing import Union
 from ngpasm.registers import Register
 
 
-class _BasicMnemonic(ABC):
+class _ABCBasicMnemonic(ABC):
     """
     Base class for assembly mnemonics with flexible operand handling.
 
@@ -43,7 +43,7 @@ class _BasicMnemonic(ABC):
 
     @abstractmethod
     def _validate(self):
-        raise NotImplementedError
+        """Validate mnemonics operands and other fields."""
 
     @property
     def comment(self) -> str | None:
@@ -130,3 +130,8 @@ class _BasicMnemonic(ABC):
             return f"{indent}{instruction}  ; {comment}"
 
         return f"{indent}{instruction}"
+
+
+class _BasicMnemonic(_ABCBasicMnemonic):
+    def _validate(self):
+        pass

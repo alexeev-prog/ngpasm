@@ -1,7 +1,7 @@
-from ngpasm.mnemonics.base import _BasicMnemonic
+from ngpasm.mnemonics.base import _ABCBasicMnemonic
 
 
-class AddMnemonic(_BasicMnemonic):
+class AddMnemonic(_ABCBasicMnemonic):
     """
     The ADD instruction in assembler performs the addition of two operands.
 
@@ -9,17 +9,18 @@ class AddMnemonic(_BasicMnemonic):
     or two 8-bit numbers can be added to each other.
     """
 
-    def validate(self) -> None:
+    def _validate(self) -> None:
         """Validate the mnemonic."""
         if len(self.operands) != 2:
-            raise ValueError(f"Mnemonic ADD required 2 operands;"
-                            f"but get {len(self.operands)}")
+            raise ValueError(
+                f"Mnemonic ADD required 2 operands;but get {len(self.operands)}"
+            )
 
     def _generate_default_comment(self) -> str:
         return f"Adding the {self.operands[1]!s} value to the {self.operands[0]!s}"
 
 
-class SubMnemonic(_BasicMnemonic):
+class SubMnemonic(_ABCBasicMnemonic):
     """
     The ASM sub mnemonic is a subtraction instruction.
 
@@ -27,17 +28,18 @@ class SubMnemonic(_BasicMnemonic):
     operand and replaces the destination with the result.
     """
 
-    def validate(self) -> None:
+    def _validate(self) -> None:
         """Validate the mnemonic."""
         if len(self.operands) != 2:
-            raise ValueError(f"Mnemonic SUB required 2 operands;"
-                            f"but get {len(self.operands)}")
+            raise ValueError(
+                f"Mnemonic SUB required 2 operands;but get {len(self.operands)}"
+            )
 
     def _generate_default_comment(self) -> str:
         return f"Substract the {self.operands[1]!s} value to the {self.operands[0]!s}"
 
 
-class DivMnemonic(_BasicMnemonic):
+class DivMnemonic(_ABCBasicMnemonic):
     """
     The ASM DIV mnemonic is a division instruction.
 
@@ -45,17 +47,18 @@ class DivMnemonic(_BasicMnemonic):
     operand and replaces the destination with the result.
     """
 
-    def validate(self) -> None:
+    def _validate(self) -> None:
         """Validate the mnemonic."""
         if len(self.operands) != 2:
-            raise ValueError(f"Mnemonic DIV required 2 operands;"
-                            f"but get {len(self.operands)}")
+            raise ValueError(
+                f"Mnemonic DIV required 2 operands;but get {len(self.operands)}"
+            )
 
     def _generate_default_comment(self) -> str:
-        return f"Division the {self.operands[1]!s} value to the {self.operands[0]!s}"
+        return f"Divising the {self.operands[1]!s} value to the {self.operands[0]!s}"
 
 
-class MulMnemonic(_BasicMnemonic):
+class MulMnemonic(_ABCBasicMnemonic):
     """
     The ASM MUL mnemonic is a multiplication instruction.
 
@@ -63,38 +66,42 @@ class MulMnemonic(_BasicMnemonic):
     operand and replaces the destination with the result.
     """
 
-    def validate(self) -> None:
+    def _validate(self) -> None:
         """Validate the mnemonic."""
         if len(self.operands) != 2:
-            raise ValueError(f"Mnemonic MUL required 2 operands;"
-                            f"but get {len(self.operands)}")
+            raise ValueError(
+                f"Mnemonic MUL required 2 operands;but get {len(self.operands)}"
+            )
 
     def _generate_default_comment(self) -> str:
-        raise ValueError(f"Multiplication the {self.operands[1]!s}"
-                f"value to the {self.operands[0]!s}")
+        return (
+            f"Multiplicating the {self.operands[1]!s} value to the {self.operands[0]!s}"
+        )
 
 
-class IncMnemonic(_BasicMnemonic):
+class IncMnemonic(_ABCBasicMnemonic):
     """The ASM INC mnemonic is a increment instruction. It increments the register."""
 
-    def validate(self) -> None:
+    def _validate(self) -> None:
         """Validate the mnemonic."""
         if len(self.operands) != 1:
-            raise ValueError(f"Mnemonic INC required 1 operands;"
-                            f"but get {len(self.operands)}")
+            raise ValueError(
+                f"Mnemonic INC required 1 operands;but get {len(self.operands)}"
+            )
 
     def _generate_default_comment(self) -> str:
-        return f"Increment the {self.operands[0]!s}"
+        return f"Increment {self.operands[0]!s}"
 
 
-class DecMnemonic(_BasicMnemonic):
+class DecMnemonic(_ABCBasicMnemonic):
     """The ASM DEC mnemonic is a decrement instruction. It decrements the register."""
 
-    def validate(self) -> None:
+    def _validate(self) -> None:
         """Validate the mnemonic."""
         if len(self.operands) != 1:
-            raise ValueError(f"Mnemonic DEC required 1 operands;"
-                            f"but get {len(self.operands)}")
+            raise ValueError(
+                f"Mnemonic DEC required 1 operands;but get {len(self.operands)}"
+            )
 
     def _generate_default_comment(self) -> str:
-        return f"Decrement the {self.operands[0]!s}"
+        return f"Decrement {self.operands[0]!s}"

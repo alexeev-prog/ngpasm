@@ -1,3 +1,9 @@
+commit a913918f5c5fc7dc891718f8da6a8771c3d96519
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 06:50:10 2025 +0700
+
+    improve arithmetic mnemonics & docs
+
 commit 0b7a999979ba6f960596aa4ad19bb7fb8ac54014
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Thu Jul 31 10:50:54 2025 +0700

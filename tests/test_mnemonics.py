@@ -1,6 +1,6 @@
 import pytest
 
-from ngpasm.mnemonics.base import _BasicMnemonic
+from ngpasm.mnemonics.base import _ABCBasicMnemonic, _BasicMnemonic
 from ngpasm.registers import Register
 
 
@@ -10,6 +10,17 @@ class MockRegister(Register):  # noqa: D101
 
     def __str__(self):  # noqa: D105
         return self.name
+
+
+class _TestBasicMnemonic(_ABCBasicMnemonic):
+    def _validate(self):
+        raise NotImplementedError
+
+
+def test_validate_not_implemented():
+    """Test that abstract class requires _validate implementation."""
+    with pytest.raises(NotImplementedError):
+        _TestBasicMnemonic("mov", "eax", "ebx", enable_comment=True)
 
 
 @pytest.fixture
