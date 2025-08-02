@@ -1,4 +1,7 @@
+from typing import Union
+
 from ngpasm.mnemonics.base import _ABCBasicMnemonic
+from ngpasm.registers import Register
 
 
 class AddMnemonic(_ABCBasicMnemonic):
@@ -9,11 +12,16 @@ class AddMnemonic(_ABCBasicMnemonic):
     or two 8-bit numbers can be added to each other.
     """
 
+    def __init__(
+        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
+    ):
+        super().__init__("add", *operands, enable_comment=enable_comment)
+
     def _validate(self) -> None:
         """Validate the mnemonic."""
         if len(self.operands) != 2:
             raise ValueError(
-                f"Mnemonic ADD required 2 operands;but get {len(self.operands)}"
+                f"Mnemonic ADD required 2 operands; but get {len(self.operands)}"
             )
 
     def _generate_default_comment(self) -> str:

@@ -1,17 +1,51 @@
-<<<<<<< HEAD
-=======
+commit b45455a9936e8a5f63134c748a197514056784eb
+Merge: 43a8a27 f5acd23
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 14:33:56 2025 +0700
+
+    fix tests
+
+commit f5acd23c6a9a864da9b7347140216f5f24abfbae
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 14:33:04 2025 +0700
+
+    fix tests
+
+commit 43a8a272995f9a64e5e59a9e5b9b8329eac6cfad
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 14:32:10 2025 +0700
+
+    fix tests
+
 commit 4987c92ff230948270afff27da3cb44fbb8b2386
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Aug 2 14:32:10 2025 +0700
 
     fix tests
 
->>>>>>> dev
+commit dcba7e4368af9e1d372e5303d174a05f1b63348b
+Merge: f8b1c2d 2011edd
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 13:43:32 2025 +0700
+
+    Merge pull request #3 from alexeev-prog/dev
+    
+    fix sphinx docs configuration
+
 commit 2011edd02fe3740ac63ad2407fafeb8774a70514
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Aug 2 13:42:51 2025 +0700
 
     fix sphinx docs configuration
+
+commit f8b1c2d0fa0711c2c56d97948b23427f29f33dad
+Merge: 5cb89ae 7960796
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 13:37:28 2025 +0700
+
+    Merge pull request #2 from alexeev-prog/dev
+    
+    fix docs
 
 commit 7960796fcf26ec041c830bb871fec4c981641e2a
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
@@ -19,11 +53,27 @@ Date:   Sat Aug 2 13:36:45 2025 +0700
 
     fix docs
 
+commit 5cb89aeef1936039679b54c4ae12b2c437346ccf
+Merge: 612afd3 96a4600
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 13:14:44 2025 +0700
+
+    Merge branch 'dev'
+
 commit 96a4600757211485efed139cbf62bb3820499ebc
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sat Aug 2 13:14:02 2025 +0700
 
     fix docs
+
+commit 612afd342773b704c45d32d5914b0f654aaaefc6
+Merge: 1d96338 091b78f
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 13:11:49 2025 +0700
+
+    Merge pull request #1 from alexeev-prog/dev
+    
+    Add tests and improve mnemonics
 
 commit 091b78f4f6f9d9d498fdb401353960b53db591fa
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>

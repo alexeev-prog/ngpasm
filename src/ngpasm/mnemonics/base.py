@@ -106,7 +106,7 @@ class _ABCBasicMnemonic(ABC):
         """
         return ", ".join(str(op) for op in self.operands)
 
-    def construct(self, indent: str = "    ") -> str:
+    def construct(self, indent: str = "") -> str:
         """
         Constructs complete assembly instruction string.
 
