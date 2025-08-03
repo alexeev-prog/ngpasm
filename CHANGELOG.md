@@ -1,3 +1,9 @@
+commit dcbb3e007ac19bfd1d63ea4c108446ef04f52b5e
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sun Aug 3 08:42:39 2025 +0700
+
+    add docstring in dunder method in register init file
+
 commit 05068d3327945bb9ac6ef78e64580254ad949665
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sun Aug 3 08:41:02 2025 +0700
