@@ -88,7 +88,10 @@ def test_mul_mnemonic_validation(mock_registers):
 
 def test_mul_mnemonic_comment(mock_registers):
     mnemonic = MulMnemonic(mock_registers[0], mock_registers[1])
-    assert "Multiplicating the RBX value to the RAX" in mnemonic._generate_default_comment()
+    assert (
+        "Multiplicating the RBX value to the RAX"
+        in mnemonic._generate_default_comment()
+    )
 
 
 def test_inc_mnemonic_validation(mock_registers):

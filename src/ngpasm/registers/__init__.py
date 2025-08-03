@@ -47,6 +47,7 @@ class Register:
         return hierarchy
 
     def __str__(self):
+        """Return string interpolation of register."""
         return self.name
 
 

@@ -8,6 +8,7 @@ from ngpasm.registers import get_registers
 
 class MockMnemonic(_BasicMnemonic):
     """Mock mnemonic with comment disabled by default"""
+
     def __init__(self, mnemonic_name, *operands, enable_comment=False):
         super().__init__(mnemonic_name, *operands, enable_comment=enable_comment)
 

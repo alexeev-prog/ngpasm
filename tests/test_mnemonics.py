@@ -12,6 +12,7 @@ class MockRegister(Register):
 
 class ConcreteMnemonic(_ABCBasicMnemonic):
     """Concrete implementation for testing base functionality"""
+
     def _validate(self):
         pass  # No validation for base tests
 
