@@ -46,6 +46,10 @@ class Register:
             current = current.parent
         return hierarchy
 
+    def __str__(self):
+        """Return string interpolation of register."""
+        return self.name
+
 
 class BaseRegisterSet(Mapping):
     """Base class for register sets providing common functionality."""

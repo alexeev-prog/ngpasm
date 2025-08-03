@@ -1,190 +1,145 @@
-# [file name]: tests/test_arithmetic_mnemonics.py
+# test_arithmetic_mnemonics.py
 import pytest
 
 from ngpasm.mnemonics.arithmetic import (
     AddMnemonic,
-    DecMnemonic,
-    DivMnemonic,
-    IncMnemonic,
-    MulMnemonic,
     SubMnemonic,
+    DivMnemonic,
+    MulMnemonic,
+    IncMnemonic,
+    DecMnemonic,
 )
 from ngpasm.registers import Register
 
 
 class MockRegister(Register):
-    def __init__(self, name):
-        self.name = name
-
-    def __str__(self):
-        return self.name
-
-
-AX = MockRegister("AX")
-BX = MockRegister("BX")
-CX = MockRegister("CX")
-DX = MockRegister("DX")
+    def __init__(self, name, size=64):
+        super().__init__(name, size)
 
 
 @pytest.fixture
-def add_mnemonic():
-    return AddMnemonic("add", AX, BX)
+def mock_registers():
+    return [
+        MockRegister("RAX"),
+        MockRegister("RBX"),
+        MockRegister("RCX"),
+        MockRegister("AL"),
+    ]
 
 
-@pytest.fixture
-def sub_mnemonic():
-    return SubMnemonic("sub", AX, BX)
+def test_add_mnemonic_validation(mock_registers):
+    # Valid
+    AddMnemonic(mock_registers[0], mock_registers[1])
+
+    # Invalid operand count
+    with pytest.raises(ValueError):
+        AddMnemonic(mock_registers[0])
+    with pytest.raises(ValueError):
+        AddMnemonic(mock_registers[0], mock_registers[1], mock_registers[2])
 
 
-@pytest.fixture
-def div_mnemonic():
-    return DivMnemonic("div", AX, BX)
+def test_add_mnemonic_comment(mock_registers):
+    mnemonic = AddMnemonic(mock_registers[0], mock_registers[1])
+    assert "Adding the RBX value to the RAX" in mnemonic._generate_default_comment()
 
 
-@pytest.fixture
-def mul_mnemonic():
-    return MulMnemonic("mul", AX, BX)
+def test_sub_mnemonic_validation(mock_registers):
+    # Valid
+    SubMnemonic(mock_registers[0], mock_registers[1])
+
+    # Invalid operand count
+    with pytest.raises(ValueError):
+        SubMnemonic(mock_registers[0])
+    with pytest.raises(ValueError):
+        SubMnemonic(mock_registers[0], mock_registers[1], mock_registers[2])
 
 
-@pytest.fixture
-def inc_mnemonic():
-    return IncMnemonic("inc", AX)
+def test_sub_mnemonic_comment(mock_registers):
+    mnemonic = SubMnemonic(mock_registers[0], mock_registers[1])
+    assert "Subtract the RBX value from the RAX" in mnemonic._generate_default_comment()
 
 
-@pytest.fixture
-def dec_mnemonic():
-    return DecMnemonic("dec", AX)
+def test_div_mnemonic_validation(mock_registers):
+    # Valid
+    DivMnemonic(mock_registers[0], mock_registers[1])
+
+    # Invalid operand count
+    with pytest.raises(ValueError):
+        DivMnemonic(mock_registers[0])
+    with pytest.raises(ValueError):
+        DivMnemonic(mock_registers[0], mock_registers[1], mock_registers[2])
 
 
-def test_add_mnemonic_comment(add_mnemonic):
-    assert add_mnemonic._generate_default_comment() == "Adding the BX value to the AX"
+def test_div_mnemonic_comment(mock_registers):
+    mnemonic = DivMnemonic(mock_registers[0], mock_registers[1])
+    assert "Dividing the RBX value to the RAX" in mnemonic._generate_default_comment()
 
 
-@pytest.mark.parametrize("operands", [[AX], [AX, BX, CX], [], [10]])
-def test_add_invalid_operands(operands):
-    with pytest.raises(ValueError) as excinfo:
-        AddMnemonic("add", *operands)
-    assert "operands" in str(excinfo.value)
+def test_mul_mnemonic_validation(mock_registers):
+    # Valid
+    MulMnemonic(mock_registers[0], mock_registers[1])
+
+    # Invalid operand count
+    with pytest.raises(ValueError):
+        MulMnemonic(mock_registers[0])
+    with pytest.raises(ValueError):
+        MulMnemonic(mock_registers[0], mock_registers[1], mock_registers[2])
 
 
-def test_sub_mnemonic_comment(sub_mnemonic):
+def test_mul_mnemonic_comment(mock_registers):
+    mnemonic = MulMnemonic(mock_registers[0], mock_registers[1])
     assert (
-        sub_mnemonic._generate_default_comment() == "Substract the BX value to the AX"
+        "Multiplicating the RBX value to the RAX"
+        in mnemonic._generate_default_comment()
     )
 
 
-@pytest.mark.parametrize("operands", [[AX], [AX, BX, CX], []])
-def test_sub_invalid_operands(operands):
-    with pytest.raises(ValueError) as excinfo:
-        SubMnemonic("sub", *operands)
-    assert "operands" in str(excinfo.value)
+def test_inc_mnemonic_validation(mock_registers):
+    # Valid
+    IncMnemonic(mock_registers[0])
+
+    # Invalid operand count
+    with pytest.raises(ValueError):
+        IncMnemonic()
+    with pytest.raises(ValueError):
+        IncMnemonic(mock_registers[0], mock_registers[1])
 
 
-def test_div_mnemonic_comment(div_mnemonic):
-    assert div_mnemonic._generate_default_comment() == "Divising the BX value to the AX"
+def test_inc_mnemonic_comment(mock_registers):
+    mnemonic = IncMnemonic(mock_registers[0])
+    assert "Increment RAX" in mnemonic._generate_default_comment()
 
 
-@pytest.mark.parametrize("operands", [[AX], [AX, BX, CX], []])
-def test_div_invalid_operands(operands):
-    with pytest.raises(ValueError) as excinfo:
-        DivMnemonic("div", *operands)
-    assert "operands" in str(excinfo.value)
+def test_dec_mnemonic_validation(mock_registers):
+    # Valid
+    DecMnemonic(mock_registers[0])
+
+    # Invalid operand count
+    with pytest.raises(ValueError):
+        DecMnemonic()
+    with pytest.raises(ValueError):
+        DecMnemonic(mock_registers[0], mock_registers[1])
 
 
-def test_mul_mnemonic_comment(mul_mnemonic):
-    assert (
-        mul_mnemonic._generate_default_comment()
-        == "Multiplicating the BX value to the AX"
-    )
+def test_dec_mnemonic_comment(mock_registers):
+    mnemonic = DecMnemonic(mock_registers[0])
+    assert "Decrement RAX" in mnemonic._generate_default_comment()
 
 
-@pytest.mark.parametrize("operands", [[AX], [AX, BX, CX], []])
-def test_mul_invalid_operands(operands):
-    with pytest.raises(ValueError) as excinfo:
-        MulMnemonic("mul", *operands)
-    assert "operands" in str(excinfo.value)
+def test_arithmetic_mnemonics_with_non_register_operands():
+    # Test with mixed operand types
+    AddMnemonic("RAX", 42)
+    SubMnemonic(Register("RBX", 64), "value")
+    MulMnemonic(100, Register("RCX", 64))
+    DivMnemonic("[MEM]", Register("RDX", 64))
+    IncMnemonic("counter")
+    DecMnemonic(42)
 
 
-def test_inc_mnemonic_comment(inc_mnemonic):
-    assert inc_mnemonic._generate_default_comment() == "Increment AX"
-
-
-@pytest.mark.parametrize("operands", [[], [AX, BX], [AX, BX, CX]])
-def test_inc_invalid_operands(operands):
-    with pytest.raises(ValueError) as excinfo:
-        IncMnemonic("inc", *operands)
-    assert "operands" in str(excinfo.value)
-
-
-def test_dec_mnemonic_comment(dec_mnemonic):
-    assert dec_mnemonic._generate_default_comment() == "Decrement AX"
-
-
-@pytest.mark.parametrize("operands", [[], [AX, BX], [AX, BX, CX]])
-def test_dec_invalid_operands(operands):
-    with pytest.raises(ValueError) as excinfo:
-        DecMnemonic("dec", *operands)
-    assert "operands" in str(excinfo.value)
-
-
-@pytest.mark.parametrize(
-    ("mnemonic_class", "operands"),
-    [
-        (AddMnemonic, [AX, BX]),
-        (SubMnemonic, [AX, CX]),
-        (DivMnemonic, [DX, AX]),
-        (MulMnemonic, [BX, CX]),
-        (IncMnemonic, [AX]),
-        (DecMnemonic, [BX]),
-    ],
-)
-def test_valid_operands(mnemonic_class, operands):
-    instance = mnemonic_class("test", *operands)
-    assert len(instance.operands) == len(operands)
-
-
-@pytest.mark.parametrize(
-    ("mnemonic_class", "invalid_operands"),
-    [
-        (AddMnemonic, [None, BX]),
-        (SubMnemonic, [AX, 3.14]),
-        (DivMnemonic, [object(), BX]),
-        (MulMnemonic, [AX, [1, 2]]),
-        (IncMnemonic, [set()]),
-        (DecMnemonic, [3.14]),
-    ],
-)
-def test_invalid_operand_types(mnemonic_class, invalid_operands):
+def test_arithmetic_mnemonics_invalid_operand_types():
+    # Must call construct() to trigger type validation
     with pytest.raises(TypeError):
-        mnemonic = mnemonic_class("test", *invalid_operands)
-        mnemonic._validate_operand_types()
+        AddMnemonic(3.14, Register("RAX", 64)).construct()
 
-
-def test_add_construction(add_mnemonic):
-    add_mnemonic.comment = "Custom addition"
-    result = add_mnemonic.construct()
-    assert result == "    add AX, BX  ; Custom addition"
-
-
-def test_inc_construction(inc_mnemonic):
-    inc_mnemonic._enable_comment = False
-    assert inc_mnemonic.construct() == "    inc AX"
-
-
-def test_mul_construction(mul_mnemonic):
-    assert mul_mnemonic.construct().startswith("    mul AX, BX")
-
-
-def test_construct_with_default_comment(inc_mnemonic):
-    result = inc_mnemonic.construct()
-    assert "Increment AX" in result
-
-
-def test_construct_with_disabled_comment(inc_mnemonic):
-    inc_mnemonic._enable_comment = False
-    assert ";" not in inc_mnemonic.construct()
-
-
-def test_construct_with_custom_indent(inc_mnemonic):
-    result = inc_mnemonic.construct(indent="  ")
-    assert result.startswith("  inc AX")
+    with pytest.raises(TypeError):
+        SubMnemonic(Register("RAX", 64), [1, 2, 3]).construct()

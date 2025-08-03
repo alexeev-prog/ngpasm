@@ -90,6 +90,7 @@ def tmp_config_file(tmp_path):
         file = tmp_path / f"test_config{extension}"
         file.write_text(content)
         return file
+
     return _create_file
 
 

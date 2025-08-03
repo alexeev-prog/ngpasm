@@ -1,4 +1,7 @@
+from typing import Union
+
 from ngpasm.mnemonics.base import _ABCBasicMnemonic
+from ngpasm.registers import Register
 
 
 class AddMnemonic(_ABCBasicMnemonic):
@@ -9,11 +12,17 @@ class AddMnemonic(_ABCBasicMnemonic):
     or two 8-bit numbers can be added to each other.
     """
 
+    def __init__(
+        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
+    ):
+        """Initialize a mnemonic."""
+        super().__init__("add", *operands, enable_comment=enable_comment)
+
     def _validate(self) -> None:
         """Validate the mnemonic."""
         if len(self.operands) != 2:
             raise ValueError(
-                f"Mnemonic ADD required 2 operands;but get {len(self.operands)}"
+                f"Mnemonic ADD required 2 operands; but get {len(self.operands)}"
             )
 
     def _generate_default_comment(self) -> str:
@@ -28,6 +37,12 @@ class SubMnemonic(_ABCBasicMnemonic):
     operand and replaces the destination with the result.
     """
 
+    def __init__(
+        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
+    ):
+        """Initialize a mnemonic."""
+        super().__init__("sub", *operands, enable_comment=enable_comment)
+
     def _validate(self) -> None:
         """Validate the mnemonic."""
         if len(self.operands) != 2:
@@ -36,7 +51,7 @@ class SubMnemonic(_ABCBasicMnemonic):
             )
 
     def _generate_default_comment(self) -> str:
-        return f"Substract the {self.operands[1]!s} value to the {self.operands[0]!s}"
+        return f"Subtract the {self.operands[1]!s} value from the {self.operands[0]!s}"
 
 
 class DivMnemonic(_ABCBasicMnemonic):
@@ -47,6 +62,12 @@ class DivMnemonic(_ABCBasicMnemonic):
     operand and replaces the destination with the result.
     """
 
+    def __init__(
+        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
+    ):
+        """Initialize a mnemonic."""
+        super().__init__("div", *operands, enable_comment=enable_comment)
+
     def _validate(self) -> None:
         """Validate the mnemonic."""
         if len(self.operands) != 2:
@@ -55,7 +76,7 @@ class DivMnemonic(_ABCBasicMnemonic):
             )
 
     def _generate_default_comment(self) -> str:
-        return f"Divising the {self.operands[1]!s} value to the {self.operands[0]!s}"
+        return f"Dividing the {self.operands[1]!s} value to the {self.operands[0]!s}"
 
 
 class MulMnemonic(_ABCBasicMnemonic):
@@ -65,6 +86,12 @@ class MulMnemonic(_ABCBasicMnemonic):
     It multiplicates the source operand from the destination
     operand and replaces the destination with the result.
     """
+
+    def __init__(
+        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
+    ):
+        """Initialize a mnemonic."""
+        super().__init__("mul", *operands, enable_comment=enable_comment)
 
     def _validate(self) -> None:
         """Validate the mnemonic."""
@@ -82,6 +109,12 @@ class MulMnemonic(_ABCBasicMnemonic):
 class IncMnemonic(_ABCBasicMnemonic):
     """The ASM INC mnemonic is a increment instruction. It increments the register."""
 
+    def __init__(
+        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
+    ):
+        """Initialize a mnemonic."""
+        super().__init__("inc", *operands, enable_comment=enable_comment)
+
     def _validate(self) -> None:
         """Validate the mnemonic."""
         if len(self.operands) != 1:
@@ -95,6 +128,12 @@ class IncMnemonic(_ABCBasicMnemonic):
 
 class DecMnemonic(_ABCBasicMnemonic):
     """The ASM DEC mnemonic is a decrement instruction. It decrements the register."""
+
+    def __init__(
+        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
+    ):
+        """Initialize a mnemonic."""
+        super().__init__("dec", *operands, enable_comment=enable_comment)
 
     def _validate(self) -> None:
         """Validate the mnemonic."""
