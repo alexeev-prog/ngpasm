@@ -37,6 +37,8 @@ def test_insert_mnemonic(sample_program):
     mnemonic = MockMnemonic("nop")
     sample_program.insert_mnemonic(mnemonic)
     assert len(sample_program._mnemonics) == 1
+    assert sample_program.mnemonics[0] == mnemonic
+    assert sample_program.mnemonics == [mnemonic]
     assert sample_program._mnemonics[0] == mnemonic
 
 
