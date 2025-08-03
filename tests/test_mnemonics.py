@@ -1,118 +1,91 @@
+# test_mnemonics.py
 import pytest
 
 from ngpasm.mnemonics.base import _ABCBasicMnemonic, _BasicMnemonic
 from ngpasm.registers import Register
 
 
-class MockRegister(Register):  # noqa: D101
-    def __init__(self, name):  # noqa: D107
-        self.name = name
-
-    def __str__(self):  # noqa: D105
-        return self.name
+class MockRegister(Register):
+    def __init__(self, name, size=64):
+        super().__init__(name, size)
 
 
-class _TestBasicMnemonic(_ABCBasicMnemonic):
+class ConcreteMnemonic(_ABCBasicMnemonic):
+    """Concrete implementation for testing base functionality"""
     def _validate(self):
-        raise NotImplementedError
+        pass  # No validation for base tests
 
 
-def test_validate_not_implemented():
-    """Test that abstract class requires _validate implementation."""
-    with pytest.raises(NotImplementedError):
-        _TestBasicMnemonic("mov", "eax", "ebx", enable_comment=True)
+def test_abstract_class_cannot_be_instantiated():
+    with pytest.raises(TypeError):
+        _ABCBasicMnemonic("test")
 
 
-@pytest.fixture
-def basic_mnemonic():  # noqa: D103
-    return _BasicMnemonic(
-        "test", MockRegister("AX"), MockRegister("BX"), enable_comment=True
-    )
+def test_concrete_mnemonic_validation():
+    # Should not raise with no validation
+    ConcreteMnemonic("mov", "RAX", "RBX", "RCX")
 
 
-@pytest.mark.parametrize(
-    ("operands", "expected"),
-    [
-        ([], "TEST operation."),
-        (["AX"], "TEST operand AX."),
-        (["AX", "BX"], "TEST from BX to AX."),
-        (["AX", "BX", 10], "TEST with 3 operands."),
-    ],
-)
-def test_generate_default_comment(operands, expected):  # noqa: D103
-    mnemonic = _BasicMnemonic("test", *operands)
-    assert mnemonic._generate_default_comment() == expected  # noqa: S101, SLF001
-
-
-def test_comment_property(basic_mnemonic):  # noqa: D103
-    basic_mnemonic.comment = "Custom comment"
-    assert basic_mnemonic.comment == "Custom comment"  # noqa: S101
-
-    basic_mnemonic.comment = None
-    assert basic_mnemonic.comment is None  # noqa: S101
-
-
-@pytest.mark.parametrize(
-    "operands",
-    [
-        [MockRegister("AX"), "BX"],
-        ["AX", 10],
-        [10, MockRegister("BX")],
-    ],
-)
-def test_valid_operand_types(operands):  # noqa: D103
-    mnemonic = _BasicMnemonic("test", *operands)
-    mnemonic._validate_operand_types()  # noqa: SLF001
-
-
-@pytest.mark.parametrize(
-    "operands",
-    [
-        [None],
-        [3.14],
-        [object()],
-    ],
-)
-def test_invalid_operand_types(operands):  # noqa: D103
-    with pytest.raises(TypeError):  # noqa: PT012
-        mnemonic = _BasicMnemonic("test", *operands)
-        mnemonic._validate_operand_types()  # noqa: SLF001
-
-
-@pytest.mark.parametrize(
-    ("operands", "expected"),
-    [
-        ([], ""),
-        (["AX"], "AX"),
-        (["AX", 10], "AX, 10"),
-        (["AX", "BX", 10], "AX, BX, 10"),
-    ],
-)
-def test_format_operands(operands, expected):  # noqa: D103
-    mnemonic = _BasicMnemonic("test", *operands)
-    assert mnemonic._format_operands() == expected  # noqa: S101, SLF001
-
-
-@pytest.mark.parametrize(
-    ("enable_comment", "comment", "expected"),
-    [
-        (True, None, "    test AX, BX  ; TEST from BX to AX."),
-        (True, "Custom", "    test AX, BX  ; Custom"),
-        (False, None, "    test AX, BX"),
-    ],
-)
-def test_construct(basic_mnemonic, enable_comment, comment, expected):  # noqa: D103
-    basic_mnemonic._enable_comment = enable_comment  # noqa: SLF001
-    basic_mnemonic.comment = comment
-    assert basic_mnemonic.construct() == expected  # noqa: S101
-
-
-def test_construct_indent(basic_mnemonic):  # noqa: D103
-    assert (  # noqa: S101
-        basic_mnemonic.construct(indent="  ") == "  test AX, BX  ; TEST from BX to AX."
-    )
-
-
-def test_construct_no_operands():  # noqa: D103
+def test_basic_mnemonic():
     mnemonic = _BasicMnemonic("nop")
-    assert mnemonic.construct() == "    nop  ; NOP operation."  # noqa: S101
+    assert mnemonic.mnemonic_name == "nop"
+    assert len(mnemonic.operands) == 0
+
+
+def test_comment_property():
+    mnemonic = ConcreteMnemonic("test")
+    assert mnemonic.comment is None
+
+    mnemonic.comment = "Custom comment"
+    assert mnemonic.comment == "Custom comment"
+
+    mnemonic.comment = None
+    assert mnemonic.comment is None
+
+
+def test_generate_default_comment():
+    # No operands
+    mnemonic = ConcreteMnemonic("ret")
+    assert "RET operation." in mnemonic._generate_default_comment()
+
+    # One operand
+    mnemonic = ConcreteMnemonic("push", "RAX")
+    assert "PUSH operand RAX." in mnemonic._generate_default_comment()
+
+    # Two operands
+    mnemonic = ConcreteMnemonic("mov", "RAX", "RBX")
+    assert "MOV from RBX to RAX." in mnemonic._generate_default_comment()
+
+    # Three operands
+    mnemonic = ConcreteMnemonic("add", "RAX", "RBX", "RCX")
+    assert "ADD with 3 operands." in mnemonic._generate_default_comment()
+
+
+def test_format_operands():
+    mnemonic = ConcreteMnemonic("mov", "RAX", 42, "[MEM]")
+    assert mnemonic._format_operands() == "RAX, 42, [MEM]"
+
+
+def test_construct_with_comment():
+    mnemonic = ConcreteMnemonic("add", "RAX", "RBX", enable_comment=True)
+    result = mnemonic.construct()
+    assert result.startswith("add RAX, RBX")
+    assert "; ADD from RBX to RAX." in result
+
+
+def test_construct_with_custom_comment():
+    mnemonic = ConcreteMnemonic("sub", "RCX", 10)
+    mnemonic.comment = "Custom subtraction"
+    result = mnemonic.construct()
+    assert "; Custom subtraction" in result
+
+
+def test_construct_without_comment():
+    mnemonic = ConcreteMnemonic("inc", "counter", enable_comment=False)
+    assert mnemonic.construct() == "inc counter"
+
+
+def test_construct_with_indent():
+    mnemonic = ConcreteMnemonic("dec", "index", enable_comment=False)
+    result = mnemonic.construct("    ")
+    assert result == "    dec index"

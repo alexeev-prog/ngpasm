@@ -1,3 +1,9 @@
+commit 31ce8cfd1b39e9208748fef015ac30818d6c9495
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Aug 2 15:05:16 2025 +0700
+
+    feat/fix: add examples, add program, fix bugs with add mnemonic and improve program API
+
 commit b45455a9936e8a5f63134c748a197514056784eb
 Merge: 43a8a27 f5acd23
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
