@@ -1,5 +1,5 @@
-from ngpasm.program import ASMProgram, ProgramMode
 from ngpasm.mnemonics.arithmetic import AddMnemonic
+from ngpasm.program import ASMProgram, ProgramMode
 
 prog = ASMProgram("test.asm", ProgramMode.x64bit)
 regs = prog.regs

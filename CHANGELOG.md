@@ -1,3 +1,15 @@
+commit 24db0c3c0f5afb668278d929e4850b3203ba7991
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sun Aug 3 09:12:12 2025 +0700
+
+    fix codestyle for examples and tests
+
+commit 2546e3591b76ca25866a3cf911cd50c54b81f7d8
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sun Aug 3 08:47:12 2025 +0700
+
+    create doc page for ngpasm/program
+
 commit dcbb3e007ac19bfd1d63ea4c108446ef04f52b5e
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sun Aug 3 08:42:39 2025 +0700

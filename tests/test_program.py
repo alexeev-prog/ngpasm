@@ -1,13 +1,12 @@
 # test_program.py
 import pytest
 
-from ngpasm.program import ASMProgram, ProgramMode
 from ngpasm.mnemonics.base import _BasicMnemonic
-from ngpasm.registers import get_registers
+from ngpasm.program import ASMProgram, ProgramMode
 
 
 class MockMnemonic(_BasicMnemonic):
-    """Mock mnemonic with comment disabled by default"""
+    """Mock mnemonic with comment disabled by default."""
 
     def __init__(self, mnemonic_name, *operands, enable_comment=False):
         super().__init__(mnemonic_name, *operands, enable_comment=enable_comment)
@@ -38,6 +37,8 @@ def test_insert_mnemonic(sample_program):
     mnemonic = MockMnemonic("nop")
     sample_program.insert_mnemonic(mnemonic)
     assert len(sample_program._mnemonics) == 1
+    assert sample_program.mnemonics[0] == mnemonic
+    assert sample_program.mnemonics == [mnemonic]
     assert sample_program._mnemonics[0] == mnemonic
 
 

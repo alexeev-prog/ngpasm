@@ -3,11 +3,11 @@ import pytest
 
 from ngpasm.mnemonics.arithmetic import (
     AddMnemonic,
-    SubMnemonic,
-    DivMnemonic,
-    MulMnemonic,
-    IncMnemonic,
     DecMnemonic,
+    DivMnemonic,
+    IncMnemonic,
+    MulMnemonic,
+    SubMnemonic,
 )
 from ngpasm.registers import Register
 

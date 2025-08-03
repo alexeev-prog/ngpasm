@@ -74,12 +74,12 @@ SCALAR_ERROR_CASES = [
 ]
 
 
-@pytest.mark.parametrize("extension, expected", EXTENSION_TEST_CASES)
+@pytest.mark.parametrize(("extension", "expected"), EXTENSION_TEST_CASES)
 def test_detect_config_type_by_extension(extension, expected):
     assert detect_config_type_by_extension(extension) == expected
 
 
-@pytest.mark.parametrize("filename, expected", FILENAME_TEST_CASES)
+@pytest.mark.parametrize(("filename", "expected"), FILENAME_TEST_CASES)
 def test_detect_config_type_by_filename(filename, expected):
     assert detect_config_type_by_filename(filename) == expected
 

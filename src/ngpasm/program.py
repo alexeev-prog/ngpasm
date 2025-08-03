@@ -29,6 +29,10 @@ class ASMProgram:
         """Get assembly registers."""
         return self._regs
 
+    @property
+    def mnemonics(self):
+        return self._mnemonics
+
     def insert_mnemonic(self, mnemonic: _BasicMnemonic):
         """Insert mnemonic to the program."""
         self._mnemonics.append(mnemonic)
