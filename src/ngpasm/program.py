@@ -31,6 +31,7 @@ class ASMProgram:
 
     @property
     def mnemonics(self):
+        """Get mnemonics."""
         return self._mnemonics
 
     def insert_mnemonic(self, mnemonic: _BasicMnemonic):

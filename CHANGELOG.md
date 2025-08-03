@@ -1,3 +1,9 @@
+commit de1488f7505129a017a16fb09c8c449c29fa6498
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Mon Aug 4 04:33:20 2025 +0700
+
+    add mnemonics property to program
+
 commit 24db0c3c0f5afb668278d929e4850b3203ba7991
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Sun Aug 3 09:12:12 2025 +0700
