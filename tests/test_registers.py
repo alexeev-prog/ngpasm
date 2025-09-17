@@ -1,13 +1,7 @@
 import pytest
 
-from ngpasm.registers import (
-    BaseRegisterSet,
-    Register,
-    RegisterSet16,
-    RegisterSet32,
-    RegisterSet64,
-    get_registers,
-)
+from ngpasm.registers import (BaseRegisterSet, Register, RegisterSet16,
+                              RegisterSet32, RegisterSet64, get_registers)
 
 
 def test_register_creation() -> None:
