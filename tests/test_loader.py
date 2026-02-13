@@ -3,9 +3,12 @@ import pytest
 import toml
 import yaml
 
-from ngpasm.loader import (ConfigReader, ConfigType,
-                           detect_config_type_by_extension,
-                           detect_config_type_by_filename)
+from ngpasm.loader import (
+    ConfigReader,
+    ConfigType,
+    detect_config_type_by_extension,
+    detect_config_type_by_filename,
+)
 
 EXTENSION_TEST_CASES = [
     ("json", ConfigType.JSON),

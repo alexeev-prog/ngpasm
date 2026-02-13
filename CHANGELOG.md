@@ -1,3 +1,15 @@
+commit 6f1333b9e9e83f063aeeac61f7bc289010921576
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Wed Sep 17 21:22:42 2025 +0700
+
+    update codestyle
+
+commit f9a3bcde4553723d52deaf079e61acb713000633
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Mon Aug 4 04:35:06 2025 +0700
+
+    add docstring to property mnemonics in program
+
 commit de1488f7505129a017a16fb09c8c449c29fa6498
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Mon Aug 4 04:33:20 2025 +0700

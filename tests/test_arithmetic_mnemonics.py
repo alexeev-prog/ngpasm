@@ -1,8 +1,14 @@
 # test_arithmetic_mnemonics.py
 import pytest
 
-from ngpasm.mnemonics.arithmetic import (AddMnemonic, DecMnemonic, DivMnemonic,
-                                         IncMnemonic, MulMnemonic, SubMnemonic)
+from ngpasm.mnemonics.arithmetic import (
+    AddMnemonic,
+    DecMnemonic,
+    DivMnemonic,
+    IncMnemonic,
+    MulMnemonic,
+    SubMnemonic,
+)
 from ngpasm.registers import Register
 
 
