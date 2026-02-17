@@ -8,12 +8,8 @@ authors = [
 ]
 requires-python = ">=3.11"
 dependencies = [
-    "aiohttp>=3.12.15",
-    "bs4>=0.0.2",
-    "html-to-markdown>=1.14.1",
     "loguru>=0.7.3",
     "matplotlib>=3.10.5",
-    "networkx>=3.5",
     "orjson>=3.11.0",
     "pyyaml>=6.0.2",
     "rich>=14.0.0",

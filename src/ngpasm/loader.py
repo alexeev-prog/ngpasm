@@ -31,7 +31,7 @@ def detect_config_type_by_extension(extension: str) -> ConfigType:
         ConfigType: Detected config type (defaults to JSON)
 
     """
-    cleaned_extension = extension.lower().lstrip(".")
+    cleaned_extension: str = extension.lower().lstrip(".")
 
     if cleaned_extension == "json":
         return ConfigType.JSON
@@ -53,14 +53,14 @@ def detect_config_type_by_filename(filename: str) -> ConfigType:
         ConfigType: Detected config type
 
     """
-    extension = Path(filename).suffix.lstrip(".") or filename
+    extension: str = Path(filename).suffix.lstrip(".") or filename
     return detect_config_type_by_extension(extension)
 
 
 class ConfigReader:
     """Project configuration reader."""
 
-    def __init__(self, config_file: str, configtype: ConfigType = None):
+    def __init__(self, config_file: str, configtype: ConfigType = None) -> None:
         """
         Constructs new instance.
 
@@ -69,14 +69,14 @@ class ConfigReader:
             configtype: Explicit config type (auto-detected if None)
 
         """
-        self.config_file = Path(config_file)
+        self.config_file: Path = Path(config_file)
 
         if configtype is None:
-            self.configtype = detect_config_type_by_filename(config_file)
+            self.configtype: ConfigType = detect_config_type_by_filename(config_file)
         else:
-            self.configtype = configtype
+            self.configtype: ConfigType = configtype
 
-        self.config = self._load_data_from_config()
+        self.config: dict[str, any] = self._load_data_from_config()
 
     def _load_data_from_config(self) -> dict:
         """
@@ -86,7 +86,7 @@ class ConfigReader:
             dict: loaded data as dictionary
 
         """
-        data = {}
+        data: dict[str, any] = {}
 
         if not self.config_file.exists():
             return data

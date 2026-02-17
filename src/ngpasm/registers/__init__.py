@@ -122,7 +122,7 @@ class RegisterSet16(BaseRegisterSet):
         ss = Register("SS", 16)
 
         # Add all registers
-        registers = [
+        registers: list[Register] = [
             ax,
             cx,
             dx,
@@ -145,7 +145,6 @@ class RegisterSet16(BaseRegisterSet):
             ss,
         ]
 
-        # Create mapping with aliases
         self._registers = {}
         for reg in registers:
             self._registers[reg.name] = reg
@@ -202,7 +201,7 @@ class RegisterSet32(BaseRegisterSet):
         cr4 = Register("CR4", 32)
 
         # Add all registers
-        registers = [
+        registers: list[Register] = [
             eax,
             ecx,
             edx,
@@ -239,7 +238,6 @@ class RegisterSet32(BaseRegisterSet):
             cr4,
         ]
 
-        # Create mapping with aliases
         self._registers = {}
         for reg in registers:
             self._registers[reg.name] = reg
@@ -339,7 +337,7 @@ class RegisterSet64(BaseRegisterSet):
         cr8 = Register("CR8", 64)
 
         # Add all registers
-        registers = [
+        registers: list[Register] = [
             rax,
             rcx,
             rdx,
@@ -417,7 +415,6 @@ class RegisterSet64(BaseRegisterSet):
             cr8,
         ]
 
-        # Create mapping with aliases
         self._registers = {}
         for reg in registers:
             self._registers[reg.name] = reg

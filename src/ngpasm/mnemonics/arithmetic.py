@@ -14,7 +14,7 @@ class AddMnemonic(_ABCBasicMnemonic):
 
     def __init__(
         self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
+    ) -> None:
         """Initialize a mnemonic."""
         super().__init__("add", *operands, enable_comment=enable_comment)
 
@@ -39,7 +39,7 @@ class SubMnemonic(_ABCBasicMnemonic):
 
     def __init__(
         self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
+    ) -> None:
         """Initialize a mnemonic."""
         super().__init__("sub", *operands, enable_comment=enable_comment)
 
@@ -64,7 +64,7 @@ class DivMnemonic(_ABCBasicMnemonic):
 
     def __init__(
         self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
+    ) -> None:
         """Initialize a mnemonic."""
         super().__init__("div", *operands, enable_comment=enable_comment)
 
@@ -89,7 +89,7 @@ class MulMnemonic(_ABCBasicMnemonic):
 
     def __init__(
         self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
+    ) -> None:
         """Initialize a mnemonic."""
         super().__init__("mul", *operands, enable_comment=enable_comment)
 
@@ -111,7 +111,7 @@ class IncMnemonic(_ABCBasicMnemonic):
 
     def __init__(
         self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
+    ) -> None:
         """Initialize a mnemonic."""
         super().__init__("inc", *operands, enable_comment=enable_comment)
 
@@ -131,7 +131,7 @@ class DecMnemonic(_ABCBasicMnemonic):
 
     def __init__(
         self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
+    ) -> None:
         """Initialize a mnemonic."""
         super().__init__("dec", *operands, enable_comment=enable_comment)
 

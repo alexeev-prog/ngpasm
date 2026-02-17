@@ -42,7 +42,7 @@ class _ABCBasicMnemonic(ABC):
         self._validate()
 
     @abstractmethod
-    def _validate(self):
+    def _validate(self) -> None:
         """Validate mnemonics operands and other fields."""
 
     @property
@@ -69,8 +69,8 @@ class _ABCBasicMnemonic(ABC):
             Appropriately formatted comment string.
 
         """
-        operand_count = len(self.operands)
-        instruction = self.mnemonic_name.upper()
+        operand_count: int = len(self.operands)
+        instruction: str = self.mnemonic_name.upper()
 
         if operand_count == 0:
             return f"{instruction} operation."
@@ -88,7 +88,11 @@ class _ABCBasicMnemonic(ABC):
             TypeError: If any operand has invalid type.
 
         """
-        allowed_types = (Register, str, int)
+        allowed_types: tuple[type[Register], type[str], type[int]] = (
+            Register,
+            str,
+            int,
+        )
         for i, operand in enumerate(self.operands, 1):
             if not isinstance(operand, allowed_types):
                 raise TypeError(
@@ -119,19 +123,17 @@ class _ABCBasicMnemonic(ABC):
         """
         self._validate_operand_types()
 
-        # Build instruction core
-        instruction = self.mnemonic_name
+        instruction: str = self.mnemonic_name
         if self.operands:
             instruction += " " + self._format_operands()
 
-        # Add comment if enabled
         if self._enable_comment:
-            comment = self._comment or self._generate_default_comment()
+            comment: str = self._comment or self._generate_default_comment()
             return f"{indent}{instruction}  ; {comment}"
 
         return f"{indent}{instruction}"
 
 
 class _BasicMnemonic(_ABCBasicMnemonic):
-    def _validate(self):
+    def _validate(self) -> None:
         pass
