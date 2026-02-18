@@ -1,8 +1,8 @@
 # CONTRIBUTING
 
-# Contributing to pyminideprecator
+# Contributing to ngpasm
 
-We appreciate your interest in contributing to pyminideprecator! Please review these guidelines before submitting contributions.
+We appreciate your interest in contributing to ngpasm! Please review these guidelines before submitting contributions.
 
 ## Code of Conduct
 
@@ -38,8 +38,8 @@ All contributors must adhere to our Code of Conduct. Please read [CODE_OF_CONDUC
 
 ### Installation
 ```bash
-git clone https://github.com/yourusername/pyminideprecator.git
-cd pyminideprecator
+git clone https://github.com/yourusername/ngpasm.git
+cd ngpasm
 uv venv
 source .venv/bin/activate  # Linux/macOS
 .venv\Scripts\activate     # Windows
@@ -48,7 +48,7 @@ uv sync
 
 ### Running Tests
 ```bash
-pytest --cov=pyminideprecator --cov-report=term-missing
+pytest --cov=ngpasm --cov-report=term-missing
 ```
 
 ### Code Quality Checks

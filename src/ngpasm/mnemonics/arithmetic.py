@@ -1,146 +1,276 @@
-from typing import Union
+"""
+Arithmetic mnemonics module for NGPASM.
 
-from ngpasm.mnemonics.base import _ABCBasicMnemonic
+This module provides arithmetic assembly instructions including
+addition, subtraction, multiplication, division, increment, and decrement.
+"""
+
+from typing import ClassVar
+
+from ngpasm.mnemonics.base import (
+    BaseMnemonic,
+    CommentGenerator,
+    OneOperandValidator,
+    Operand,
+    TwoOperandValidator,
+)
 from ngpasm.registers import Register
 
 
-class AddMnemonic(_ABCBasicMnemonic):
+class ArithmeticCommentGenerator(CommentGenerator):
     """
-    The ADD instruction in assembler performs the addition of two operands.
+    Specialized comment generator for arithmetic operations.
 
-    A mandatory rule is that the operands are equal in size; only two 16-bit numbers
-    or two 8-bit numbers can be added to each other.
-    """
+    This generator creates context-aware comments for arithmetic instructions
+    like ADD, SUB, MUL, DIV, INC, and DEC, using appropriate templates
+    for each instruction type.
 
-    def __init__(
-        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
-        """Initialize a mnemonic."""
-        super().__init__("add", *operands, enable_comment=enable_comment)
+    Attributes:
+        _templates: Class variable mapping instruction names to comment templates.
+            Templates use {dst} and {src} placeholders for operands.
 
-    def _validate(self) -> None:
-        """Validate the mnemonic."""
-        if len(self.operands) != 2:
-            raise ValueError(
-                f"Mnemonic ADD required 2 operands; but get {len(self.operands)}"
-            )
-
-    def _generate_default_comment(self) -> str:
-        return f"Adding the {self.operands[1]!s} value to the {self.operands[0]!s}"
-
-
-class SubMnemonic(_ABCBasicMnemonic):
-    """
-    The ASM sub mnemonic is a subtraction instruction.
-
-    It subtracts the source operand from the destination
-    operand and replaces the destination with the result.
     """
 
-    def __init__(
-        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
-        """Initialize a mnemonic."""
-        super().__init__("sub", *operands, enable_comment=enable_comment)
+    _templates: ClassVar[dict[str, str]] = {
+        "add": "Adding {src} to {dst}",
+        "sub": "Subtracting {src} from {dst}",
+        "mul": "Multiplying {dst} by {src}",
+        "div": "Dividing {dst} by {src}",
+        "inc": "Incrementing {dst}",
+        "dec": "Decrementing {dst}",
+    }
 
-    def _validate(self) -> None:
-        """Validate the mnemonic."""
-        if len(self.operands) != 2:
-            raise ValueError(
-                f"Mnemonic SUB required 2 operands;but get {len(self.operands)}"
-            )
+    def generate(self, mnemonic_name: str, operands: list[Operand]) -> str:
+        """
+        Generate an arithmetic-specific comment for the instruction.
 
-    def _generate_default_comment(self) -> str:
-        return f"Subtract the {self.operands[1]!s} value from the {self.operands[0]!s}"
+        Args:
+            mnemonic_name: Name of the arithmetic instruction.
+            operands: List of operands for the instruction.
+
+        Returns:
+            A formatted comment string describing the arithmetic operation.
+            Falls back to default comment generation if no template exists.
+
+        """
+        template = self._templates.get(mnemonic_name.lower())
+        if template:
+            if len(operands) == 2:
+                return template.format(dst=operands[0], src=operands[1])
+            return template.format(dst=operands[0])
+        return super().generate(mnemonic_name, operands)
 
 
-class DivMnemonic(_ABCBasicMnemonic):
+class ArithmeticMnemonic(BaseMnemonic):
     """
-    The ASM DIV mnemonic is a division instruction.
+    Base class for arithmetic mnemonics with common behavior.
 
-    It divise the source operand from the destination
-    operand and replaces the destination with the result.
+    This class provides a foundation for all arithmetic instructions,
+    automatically setting up the appropriate validator based on the
+    expected number of operands and using arithmetic-specific comment generation.
+
     """
 
     def __init__(
-        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
-        """Initialize a mnemonic."""
-        super().__init__("div", *operands, enable_comment=enable_comment)
+        self,
+        name: str,
+        expected_operands: int,
+        *operands: Register | str | int,
+        enable_comment: bool = True,
+    ) -> None:
+        """
+        Initialize an arithmetic mnemonic.
 
-    def _validate(self) -> None:
-        """Validate the mnemonic."""
-        if len(self.operands) != 2:
-            raise ValueError(
-                f"Mnemonic DIV required 2 operands;but get {len(self.operands)}"
-            )
+        Args:
+            name: The arithmetic instruction name (e.g., 'add', 'sub').
+            expected_operands: Number of operands required (1 or 2).
+            *operands: Variable number of instruction operands.
+            enable_comment: Whether to generate comments in output.
 
-    def _generate_default_comment(self) -> str:
-        return f"Dividing the {self.operands[1]!s} value to the {self.operands[0]!s}"
+        Raises:
+            ValueError: If expected_operands is not 1/2, or if operand count mismatch.
 
-
-class MulMnemonic(_ABCBasicMnemonic):
-    """
-    The ASM MUL mnemonic is a multiplication instruction.
-
-    It multiplicates the source operand from the destination
-    operand and replaces the destination with the result.
-    """
-
-    def __init__(
-        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
-        """Initialize a mnemonic."""
-        super().__init__("mul", *operands, enable_comment=enable_comment)
-
-    def _validate(self) -> None:
-        """Validate the mnemonic."""
-        if len(self.operands) != 2:
-            raise ValueError(
-                f"Mnemonic MUL required 2 operands;but get {len(self.operands)}"
-            )
-
-    def _generate_default_comment(self) -> str:
-        return (
-            f"Multiplicating the {self.operands[1]!s} value to the {self.operands[0]!s}"
+        """
+        validator: OneOperandValidator | TwoOperandValidator = (
+            TwoOperandValidator(name)
+            if expected_operands == 2
+            else OneOperandValidator(name)
+        )
+        comment_generator = ArithmeticCommentGenerator()
+        super().__init__(
+            name, validator, comment_generator, *operands, enable_comment=enable_comment
         )
 
 
-class IncMnemonic(_ABCBasicMnemonic):
-    """The ASM INC mnemonic is a increment instruction. It increments the register."""
+class AddMnemonic(ArithmeticMnemonic):
+    """
+    ADD instruction - adds source to destination.
+
+    This mnemonic performs addition operation: destination = destination + source.
+    Requires exactly two operands.
+
+    Example:
+        AddMnemonic(Register.EAX, Register.EBX)  ; Adds EBX to EAX
+
+    """
 
     def __init__(
-        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
-        """Initialize a mnemonic."""
-        super().__init__("inc", *operands, enable_comment=enable_comment)
+        self, *operands: Register | str | int, enable_comment: bool = True
+    ) -> None:
+        """
+        Initialize an ADD instruction.
 
-    def _validate(self) -> None:
-        """Validate the mnemonic."""
-        if len(self.operands) != 1:
-            raise ValueError(
-                f"Mnemonic INC required 1 operands;but get {len(self.operands)}"
-            )
+        Args:
+            *operands: Two operands (destination, source).
+            enable_comment: Whether to generate comments in output.
 
-    def _generate_default_comment(self) -> str:
-        return f"Increment {self.operands[0]!s}"
+        Raises:
+            ValueError: If not exactly two operands are provided.
+
+        """
+        super().__init__("add", 2, *operands, enable_comment=enable_comment)
 
 
-class DecMnemonic(_ABCBasicMnemonic):
-    """The ASM DEC mnemonic is a decrement instruction. It decrements the register."""
+class SubMnemonic(ArithmeticMnemonic):
+    """
+    SUB instruction - subtracts source from destination.
+
+    This mnemonic performs subtraction operation: destination = destination - source.
+    Requires exactly two operands.
+
+    Example:
+        SubMnemonic(Register.EAX, Register.EBX)  ; Subtracts EBX from EAX
+
+    """
 
     def __init__(
-        self, *operands: tuple[Union["Register", str, int]], enable_comment: bool = True
-    ):
-        """Initialize a mnemonic."""
-        super().__init__("dec", *operands, enable_comment=enable_comment)
+        self, *operands: Register | str | int, enable_comment: bool = True
+    ) -> None:
+        """
+        Initialize a SUB instruction.
 
-    def _validate(self) -> None:
-        """Validate the mnemonic."""
-        if len(self.operands) != 1:
-            raise ValueError(
-                f"Mnemonic DEC required 1 operands;but get {len(self.operands)}"
-            )
+        Args:
+            *operands: Two operands (destination, source).
+            enable_comment: Whether to generate comments in output.
 
-    def _generate_default_comment(self) -> str:
-        return f"Decrement {self.operands[0]!s}"
+        Raises:
+            ValueError: If not exactly two operands are provided.
+
+        """
+        super().__init__("sub", 2, *operands, enable_comment=enable_comment)
+
+
+class MulMnemonic(ArithmeticMnemonic):
+    """
+    MUL instruction - multiplies destination by source.
+
+    This mnemonic performs multiplication operation: destination = destination * source.
+    Requires exactly two operands.
+
+    Example:
+        MulMnemonic(Register.EAX, Register.EBX)  ; Multiplies EAX by EBX
+
+    """
+
+    def __init__(
+        self, *operands: Register | str | int, enable_comment: bool = True
+    ) -> None:
+        """
+        Initialize a MUL instruction.
+
+        Args:
+            *operands: Two operands (destination, source).
+            enable_comment: Whether to generate comments in output.
+
+        Raises:
+            ValueError: If not exactly two operands are provided.
+
+        """
+        super().__init__("mul", 2, *operands, enable_comment=enable_comment)
+
+
+class DivMnemonic(ArithmeticMnemonic):
+    """
+    DIV instruction - divides destination by source.
+
+    This mnemonic performs division operation: destination = destination / source.
+    Requires exactly two operands.
+
+    Example:
+        DivMnemonic(Register.EAX, Register.EBX)  ; Divides EAX by EBX
+
+    """
+
+    def __init__(
+        self, *operands: Register | str | int, enable_comment: bool = True
+    ) -> None:
+        """
+        Initialize a DIV instruction.
+
+        Args:
+            *operands: Two operands (destination, source).
+            enable_comment: Whether to generate comments in output.
+
+        Raises:
+            ValueError: If not exactly two operands are provided.
+
+        """
+        super().__init__("div", 2, *operands, enable_comment=enable_comment)
+
+
+class IncMnemonic(ArithmeticMnemonic):
+    """
+    INC instruction - increments register by 1.
+
+    This mnemonic performs increment operation: operand = operand + 1.
+    Requires exactly one operand.
+
+    Example:
+        IncMnemonic(Register.EAX)  ; Increments EAX by 1
+
+    """
+
+    def __init__(
+        self, *operands: Register | str | int, enable_comment: bool = True
+    ) -> None:
+        """
+        Initialize an INC instruction.
+
+        Args:
+            *operands: Single operand to increment.
+            enable_comment: Whether to generate comments in output.
+
+        Raises:
+            ValueError: If not exactly one operand is provided.
+
+        """
+        super().__init__("inc", 1, *operands, enable_comment=enable_comment)
+
+
+class DecMnemonic(ArithmeticMnemonic):
+    """
+    DEC instruction - decrements register by 1.
+
+    This mnemonic performs decrement operation: operand = operand - 1.
+    Requires exactly one operand.
+
+    Example:
+        DecMnemonic(Register.EAX)  ; Decrements EAX by 1
+
+    """
+
+    def __init__(
+        self, *operands: Register | str | int, enable_comment: bool = True
+    ) -> None:
+        """
+        Initialize a DEC instruction.
+
+        Args:
+            *operands: Single operand to decrement.
+            enable_comment: Whether to generate comments in output.
+
+        Raises:
+            ValueError: If not exactly one operand is provided.
+
+        """
+        super().__init__("dec", 1, *operands, enable_comment=enable_comment)

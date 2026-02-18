@@ -1,45 +1,87 @@
 from enum import Enum
 
-from ngpasm.mnemonics.base import _BasicMnemonic
-from ngpasm.registers import get_registers
+from ngpasm.mnemonics.base import BaseMnemonic
+from ngpasm.registers import BaseRegisterSet, get_registers
 
 
 class ProgramMode(Enum):
-    """Program modes."""
+    """Program modes with corresponding bit sizes."""
 
-    x16bit = "16"
-    x32bit = "32"
-    x64bit = "64"
+    BIT_16 = "16"
+    BIT_32 = "32"
+    BIT_64 = "64"
+
+    @property
+    def bit_size(self) -> int:
+        """Get bit size as integer."""
+        return int(self.value)
 
 
 class ASMProgram:
-    """Assembler program class."""
+    """
+    Assembler program class.
 
-    def __init__(self, filename: str, mode: ProgramMode):
-        """Initialize a program."""
+    This class represents an assembly program with its mnemonics,
+    registers, and generation capabilities.
+    """
+
+    def __init__(self, filename: str, mode: ProgramMode) -> None:
+        """
+        Initialize an assembly program.
+
+        Args:
+            filename: Name of the output file
+            mode: Program mode (16/32/64 bit)
+
+        """
         self.filename = filename
         self.mode = mode
-        self._mnemonics = []
-        self._current_indent_level = 0
-        self._indent = ""
-        self._regs = get_registers(self.mode.value)
+        self._mnemonics: list[BaseMnemonic] = []
+        self._indent_level: int = 0
+        self._registers = get_registers(mode.value)
 
     @property
-    def regs(self):
-        """Get assembly registers."""
-        return self._regs
+    def registers(self) -> BaseRegisterSet | None:
+        """Get assembly registers for current mode."""
+        return self._registers
 
     @property
-    def mnemonics(self):
-        """Get mnemonics."""
-        return self._mnemonics
+    def mnemonics(self) -> list[BaseMnemonic]:
+        """Get list of mnemonics in the program."""
+        return self._mnemonics.copy()  # Return copy to prevent external modification
 
-    def insert_mnemonic(self, mnemonic: _BasicMnemonic):
-        """Insert mnemonic to the program."""
+    def add_mnemonic(self, mnemonic: BaseMnemonic) -> None:
+        """
+        Add a mnemonic to the program.
+
+        Args:
+            mnemonic: The mnemonic to add
+
+        Raises:
+            TypeError: If mnemonic is not a BaseMnemonic instance
+
+        """
+        if not isinstance(mnemonic, BaseMnemonic):
+            raise TypeError(f"Expected BaseMnemonic, got {type(mnemonic).__name__}")
         self._mnemonics.append(mnemonic)
 
-    def generate(self):
-        """Generate program."""
-        program = [mnemonic.construct(self._indent) for mnemonic in self._mnemonics]
+    def set_indent_level(self, level: int) -> None:
+        """Set indentation level for program generation."""
+        self._indent_level = max(0, level)
 
-        return "\n".join(program)
+    def generate(self) -> str:
+        """
+        Generate the assembly program.
+
+        Returns:
+            Formatted assembly program as string
+
+        """
+        indent = "    " * self._indent_level
+        program_lines = [mnemonic.construct(indent) for mnemonic in self._mnemonics]
+
+        return "\n".join(program_lines)
+
+    def clear(self) -> None:
+        """Clear all mnemonics from the program."""
+        self._mnemonics.clear()
