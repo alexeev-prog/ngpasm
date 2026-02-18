@@ -1,11 +1,16 @@
+# loader.py
 """
 Loader module for NGPASM.
 
-This module have a functional for reading config files.
+This module provides functionality for reading configuration files
+with support for multiple formats and proper error handling.
 """
 
-from enum import Enum
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from enum import Enum, auto
 from pathlib import Path
+from typing import Any
 
 import orjson as json
 import toml
@@ -15,93 +20,145 @@ import yaml
 class ConfigType(Enum):
     """Project configuration types."""
 
-    TOML = 0
-    YAML = 1
-    JSON = 2
+    TOML = auto()
+    YAML = auto()
+    JSON = auto()
 
 
-def detect_config_type_by_extension(extension: str) -> ConfigType:
-    """
-    Detect config type by file extension.
+@dataclass(frozen=True)
+class ConfigTypeDetector:
+    """Strategy for detecting configuration file types."""
 
-    Args:
-        extension: File extension string
+    @staticmethod
+    def by_extension(extension: str) -> ConfigType:
+        """
+        Detect config type by file extension.
 
-    Returns:
-        ConfigType: Detected config type (defaults to JSON)
+        Args:
+            extension: File extension string
 
-    """
-    cleaned_extension: str = extension.lower().lstrip(".")
+        Returns:
+            Detected config type (defaults to JSON)
 
-    if cleaned_extension == "json":
-        return ConfigType.JSON
-    if cleaned_extension in ("yaml", "yml"):
-        return ConfigType.YAML
-    if cleaned_extension == "toml":
-        return ConfigType.TOML
-    return ConfigType.JSON
+        """
+        cleaned: str = extension.lower().lstrip(".")
+
+        detectors: dict[str, ConfigType] = {
+            "json": ConfigType.JSON,
+            "yaml": ConfigType.YAML,
+            "yml": ConfigType.YAML,
+            "toml": ConfigType.TOML,
+        }
+
+        return detectors.get(cleaned, ConfigType.JSON)
+
+    @staticmethod
+    def by_filename(filename: str) -> ConfigType:
+        """
+        Detect config type by filename.
+
+        Args:
+            filename: Full filename or path
+
+        Returns:
+            Detected config type
+
+        """
+        extension: str = Path(filename).suffix.lstrip(".") or filename
+        return ConfigTypeDetector.by_extension(extension)
 
 
-def detect_config_type_by_filename(filename: str) -> ConfigType:
-    """
-    Detect config type by filename.
+class ConfigLoader(ABC):
+    """Abstract base class for configuration loaders."""
 
-    Args:
-        filename: Full filename or path
+    @abstractmethod
+    def load(self, filepath: Path) -> dict[str, Any]:
+        """Load configuration from file."""
 
-    Returns:
-        ConfigType: Detected config type
 
-    """
-    extension: str = Path(filename).suffix.lstrip(".") or filename
-    return detect_config_type_by_extension(extension)
+class JsonConfigLoader(ConfigLoader):
+    """JSON configuration loader."""
+
+    def load(self, filepath: Path) -> dict[str, Any]:
+        with filepath.open("rb") as f:
+            return json.loads(f.read())
+
+
+class YamlConfigLoader(ConfigLoader):
+    """YAML configuration loader."""
+
+    def load(self, filepath: Path) -> dict[str, Any]:
+        with filepath.open() as f:
+            return yaml.safe_load(f)
+
+
+class TomlConfigLoader(ConfigLoader):
+    """TOML configuration loader."""
+
+    def load(self, filepath: Path) -> dict[str, Any]:
+        with filepath.open() as f:
+            return toml.load(f)
 
 
 class ConfigReader:
-    """Project configuration reader."""
+    """
+    Project configuration reader with strategy pattern.
 
-    def __init__(self, config_file: str, configtype: ConfigType = None) -> None:
+    This class uses different loaders based on configuration type
+    and provides consistent error handling.
+    """
+
+    _loaders: dict[
+        ConfigType, JsonConfigLoader | TomlConfigLoader | YamlConfigLoader
+    ] = {
+        ConfigType.JSON: JsonConfigLoader(),
+        ConfigType.YAML: YamlConfigLoader(),
+        ConfigType.TOML: TomlConfigLoader(),
+    }
+
+    def __init__(self, config_file: str, configtype: ConfigType | None = None) -> None:
         """
-        Constructs new instance.
+        Initialize configuration reader.
 
         Args:
             config_file: Path to configuration file
             configtype: Explicit config type (auto-detected if None)
 
+        Raises:
+            FileNotFoundError: If config file doesn't exist
+            TypeError: If loaded data is not a dictionary
+
         """
-        self.config_file: Path = Path(config_file)
+        self.config_file = Path(config_file)
+        self.configtype = configtype or ConfigTypeDetector.by_filename(config_file)
+        self.config = self._load_data()
 
-        if configtype is None:
-            self.configtype: ConfigType = detect_config_type_by_filename(config_file)
-        else:
-            self.configtype: ConfigType = configtype
-
-        self.config: dict[str, any] = self._load_data_from_config()
-
-    def _load_data_from_config(self) -> dict:
+    def _load_data(self) -> dict[str, Any]:
         """
-        Load configuration data from file.
+        Load configuration data using appropriate loader.
 
         Returns:
-            dict: loaded data as dictionary
+            Loaded data as dictionary
+
+        Raises:
+            FileNotFoundError: If config file doesn't exist
+            TypeError: If loaded data is not a dictionary
 
         """
-        data: dict[str, any] = {}
-
         if not self.config_file.exists():
-            return data
+            raise FileNotFoundError(f"Configuration file not found: {self.config_file}")
 
-        if self.configtype == ConfigType.YAML:
-            with self.config_file.open() as f:
-                data = yaml.safe_load(f)
-        elif self.configtype == ConfigType.TOML:
-            with self.config_file.open() as f:
-                data = toml.load(f)
-        elif self.configtype == ConfigType.JSON:
-            with self.config_file.open("rb") as f:
-                data = json.loads(f.read())
+        loader: JsonConfigLoader | TomlConfigLoader | YamlConfigLoader | None = (
+            self._loaders.get(self.configtype)
+        )
+        if not loader:
+            raise ValueError(f"Unsupported configuration type: {self.configtype}")
+
+        data: dict[str, Any] = loader.load(self.config_file)
 
         if not isinstance(data, dict):
-            raise TypeError(f"Invalid data: {self.config_file}")
+            raise TypeError(
+                f"Invalid data in {self.config_file}: expected dict, got {type(data).__name__}"
+            )
 
         return data
